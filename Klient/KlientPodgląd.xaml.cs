@@ -85,7 +85,7 @@ namespace Klient
 
         /// <summary>
         /// Metoda pobierająca dane o stanie klienta i przypisująca wartości do pól zarządzających przyciskami
-        /// </summary
+        /// </summary>
         private void KonfiguracjaFlag()
         {
             buttonStart = !_klient.getStart();
@@ -94,7 +94,7 @@ namespace Klient
 
         /// <summary>
         /// Metoda aktualizująca dane w widoku
-        /// </summary
+        /// </summary>
         public void Aktualizuj()
         {
             KonfiguracjaFlag();
@@ -108,7 +108,7 @@ namespace Klient
 
         /// <summary>
         /// Metoda wymuszająca zkończenie pracy watków
-        /// </summary
+        /// </summary>
         public void ForceStop()
         {
             flagStop = true;
@@ -118,7 +118,7 @@ namespace Klient
 
         /// <summary>
         /// Metoda wypisujaca informacje asynchronicznie
-        /// </summary
+        /// </summary>
         private void aktualizujStatus(int time)
         {
             try
@@ -162,7 +162,7 @@ namespace Klient
 
         /// <summary>
         /// Uruchom klienta
-        /// </summary
+        /// </summary>
         private void btn_start_Click(object sender, RoutedEventArgs e)
         {
             _klient.KlientStart();
@@ -179,7 +179,7 @@ namespace Klient
 
         /// <summary>
         /// Otwórz Log
-        /// </summary
+        /// </summary>
         private void btn_log_Click(object sender, RoutedEventArgs e)
         {
             Process.Start("notepad.exe", (_klient.getNazwa() + ".txt"));
@@ -187,10 +187,32 @@ namespace Klient
 
         /// <summary>
         /// Zatrzymaj klienta
-        /// </summary
+        /// </summary>
         private void btn_stop_Click(object sender, RoutedEventArgs e)
         {
             new Thread(() => _klient.KlientStop()).Start();
+        }
+
+        /// <summary>
+        /// Uruchom Klienta
+        /// </summary>
+        public void StartKlient()
+        {
+            if (buttonStart && !buttonStop)
+            {
+                this.btn_start_Click(this, new RoutedEventArgs());
+            }
+        }
+
+        /// <summary>
+        /// Zatrzymaj klienta
+        /// </summary>
+        public void StopKlient()
+        {
+            if (!buttonStart && buttonStop)
+            {
+                this.btn_stop_Click(this, new RoutedEventArgs());
+            }
         }
 
     }

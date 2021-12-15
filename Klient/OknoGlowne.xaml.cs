@@ -116,5 +116,76 @@ namespace Klient
             _mainWindow.PrzejdzDoKonfiguracji();
         }
 
+        private void txt_addn_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int i;
+
+            if (int.TryParse(txt_addn.Text, out i))
+            {
+                btn_add_n.Content = ("Dodaj: " + i);
+                btn_add_n.IsEnabled = true;
+                txt_addn.Background = new SolidColorBrush(Color.FromRgb(0,255 , 23));
+            }
+            else
+            {
+                btn_add_n.IsEnabled = false;
+                txt_addn.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            }
+        }
+
+        private void btn_add_n_Click(object sender, RoutedEventArgs e)
+        {
+            int licznik = klientPodgląds.Count;
+            int i = 0;
+            int temp = licznik;
+
+            if (!int.TryParse(txt_addn.Text, out i))
+            {
+                MessageBox.Show("Błędna liczba klientów do dodania");
+                throw new Exception();
+            }
+
+            for (int j = 0; j < i; j++)
+            {
+                if (licznik < _conf.IloscKlientow)
+                {
+                    if (licznik > 0)
+                    {
+                        dGridKlienci.Height += 130;
+                        this.Height += 130;
+                    }
+                    dGridKlienci.RowDefinitions.Add(new RowDefinition());
+                    _mainWindow.DodajKlienta(new KlientRabbit(_conf.KlienciNazwy.ElementAt(licznik), _conf));
+                    klientPodgląds.Add(new KlientPodgląd(_mainWindow.PobierzKlienta(licznik)));
+                    Grid.SetRow(klientPodgląds.ElementAt(licznik), licznik);
+                    dGridKlienci.Children.Add(klientPodgląds.ElementAt(licznik));
+                    licznik++;
+                    lbl_aktywni.Content = "Aktywni klienci: " + licznik.ToString();
+                }
+            }
+
+            if (temp + i > _conf.IloscKlientow)
+            {
+                temp = _conf.IloscKlientow - temp;
+                MessageBox.Show("Osiągnięto limit klientów \nDodano " + temp + " Klientów");
+            }
+
+        }
+
+        private void btn_start_all_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(KlientPodgląd i in klientPodgląds)
+            {
+                i.StartKlient();
+            }
+        }
+
+        private void btn_stop_all_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (KlientPodgląd i in klientPodgląds)
+            {
+                i.StopKlient();
+            }
+        }
     }
 }

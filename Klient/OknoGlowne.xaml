@@ -20,6 +20,10 @@
             <Grid x:Name="dGridKlienci" Grid.Row="1" Margin="10,0,10,0"/>
         </ScrollViewer>
         <Label Content="Aktywni klienci:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="630" Foreground="White" Margin="0,150,0,0"/>
+        <Button x:Name="btn_add_n" Content="Dodaj: 1" HorizontalAlignment="Left" Height="30" Margin="225,115,0,0" VerticalAlignment="Top" Width="75" Background="#FF00FF17" Foreground="White" Click="btn_add_n_Click"/>
+        <TextBox x:Name="txt_addn" Height="30" Margin="-310,115,0,0" Text="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="90" TextAlignment="Center" FontSize="18" InputScope="Number" TextChanged="txt_addn_TextChanged"/>
+        <Button x:Name="btn_start_all" Content="Start All" HorizontalAlignment="Left" Height="30" Margin="310,115,0,0" VerticalAlignment="Top" Width="75" Foreground="White" Background="#FFFFE800" Click="btn_start_all_Click"/>
+        <Button x:Name="btn_stop_all" Content="Stop All" HorizontalAlignment="Left" Height="30" Margin="395,115,0,0" VerticalAlignment="Top" Width="75" Background="Red" Foreground="White" Click="btn_stop_all_Click"/>
 
     </Grid>
 </UserControl>
